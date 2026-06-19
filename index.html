@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>С ДНЁМ РОЖДЕНИЯ! ❤️</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-state="dark">
+  <header class="intro-screen" id="introScreen" aria-label="Включение праздничного света">
+    <div class="intro-sparkle intro-sparkle-one" aria-hidden="true"></div>
+    <div class="intro-sparkle intro-sparkle-two" aria-hidden="true"></div>
+
+    <div class="intro-content">
+      <div class="lamp-container" data-asset-shell>
+        <div class="lamp-wire" aria-hidden="true"></div>
+        <div class="lamp-glow" aria-hidden="true"></div>
+        <div class="lamp-fallback" aria-hidden="true"></div>
+        <img class="lamp-img lamp-img-off" src="img/lamp-off.png" alt="Выключенная лампочка">
+        <img class="lamp-img lamp-img-on" src="img/lamp-on.png" alt="Включенная лампочка">
+      </div>
+
+      <button class="pull-cord" id="pullCord" type="button" aria-label="Дёрнуть за ниточку и включить свет">
+        <img class="cord-handle-img" src="img/cord-handle.png" alt="" aria-hidden="true">
+      </button>
+
+      <div class="intro-copy">
+        <p class="intro-kicker">Кажется, здесь слишком темно...</p>
+        <p class="intro-hint">Дёрни за ниточку</p>
+      </div>
+
+      <div class="click-status" id="clickStatus" aria-live="polite" aria-atomic="false"></div>
+    </div>
+  </header>
+
+  <main class="main-content" id="mainContent">
+    <section class="section greeting-section" aria-labelledby="greeting-title">
+      <div class="section-inner greeting-inner">
+        <p class="section-label">Сегодня твой день</p>
+        <h1 id="greeting-title">С днём рождения, любименькая моя! ❤️</h1>
+        <p class="hero-subtitle">Ты включила свет любимая! Ты умничка!</p>
+      </div>
+    </section>
+
+    <section class="section reasons-section" aria-labelledby="reasons-title">
+      <div class="section-inner">
+        <div class="section-heading">
+          <p class="section-label">То, что я хочу повторять</p>
+          <h2 id="reasons-title">10 комплиментиков для моей сладенькой девочки ❤️</h2>
+        </div>
+
+        <div class="swiper reasons-swiper" aria-label="Слайдер с причинами любви">
+          <div class="swiper-wrapper">
+            <article class="swiper-slide reason-card">
+              <div class="reason-card-top">
+                <span class="reason-icon" aria-hidden="true">❤️</span>
+                <span class="reason-number">комплиментик 1</span>
+              </div>
+              <p>Ты у меня самая лучшая</p>
+            </article>
+
+            <article class="swiper-slide reason-card">
+              <div class="reason-card-top">
+                <span class="reason-icon" aria-hidden="true">🩷</span>
+                <span class="reason-number">комплиментик 2</span>
+              </div>
+              <p>Ты у меня самая самая добрая</p>
+            </article>
+
+            <article class="swiper-slide reason-card">
+              <div class="reason-card-top">
+                <span class="reason-icon" aria-hidden="true">🧡</span>
+                <span class="reason-number">комплиментик 3</span>
+              </div>
+              <p>Ты самая самая миленькая</p>
+            </article>
+
+            <article class="swiper-slide reason-card">
+              <div class="reason-card-top">
+                <span class="reason-icon" aria-hidden="true">💚</span>
+                <span class="reason-number">комплиментик 4</span>
+              </div>
+              <p>Ты невероятно умненькая и старательная</p>
+            </article>
+
+            <article class="swiper-slide reason-card">
+              <div class="reason-card-top">
+                <span class="reason-icon" aria-hidden="true">💙</span>
+                <span class="reason-number">комплиментик 5</span>
+              </div>
+              <p>Ты просто потрясающая</p>
+            </article>
+
+            <article class="swiper-slide reason-card">
+              <div class="reason-card-top">
+                <span class="reason-icon" aria-hidden="true">🩵</span>
+                <span class="reason-number">комплиментик 6</span>
+              </div>
+              <p>Ты у меня самая самая красивенькая</p>
+            </article>
+
+            <article class="swiper-slide reason-card">
+              <div class="reason-card-top">
+                <span class="reason-icon" aria-hidden="true">💜</span>
+                <span class="reason-number">комплиментик 7</span>
+              </div>
+              <p>Ты очень понимающая и внимательная!!</p>
+            </article>
+
+            <article class="swiper-slide reason-card">
+              <div class="reason-card-top">
+                <span class="reason-icon" aria-hidden="true">🖤</span>
+                <span class="reason-number">комплиментик 8</span>
+              </div>
+              <p>Ты безумно интересная</p>
+            </article>
+
+            <article class="swiper-slide reason-card">
+              <div class="reason-card-top">
+                <span class="reason-icon" aria-hidden="true">🩶</span>
+                <span class="reason-number">комплиментик 9</span>
+              </div>
+              <p>У тебя самая красивая улыбочка на свете</p>
+            </article>
+
+            <article class="swiper-slide reason-card">
+              <div class="reason-card-top">
+                <span class="reason-icon" aria-hidden="true">🤍</span>
+                <span class="reason-number">комплиментик 10</span>
+              </div>
+              <p>Ты самая сладенькая девочка на всей планете!</p>
+            </article>
+          </div>
+        </div>
+
+        <div class="slider-controls">
+          <div class="swiper-pagination reasons-pagination" aria-label="Пагинация причин"></div>
+          <button class="gold-button" id="btnNextReason" type="button">Дальше ➔</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section moments-section" aria-labelledby="moments-title">
+      <div class="section-inner">
+        <div class="section-heading">
+          <p class="section-label">Маленькая галерея</p>
+          <h2 id="moments-title">Это мы миленькие такие</h2>
+        </div>
+
+        <div class="swiper moments-swiper" aria-label="Слайдер с нашими моментами">
+          <div class="swiper-wrapper">
+            <article class="swiper-slide moment-slide">
+              <figure class="polaroid polaroid-left">
+                <div class="photo-frame">
+                  <img class="photo-img" src="img/photo1.jpg" alt="Первый памятный момент вместе" loading="lazy" decoding="async">
+                </div>
+                <figcaption>Это мы у моей любимой дома</figcaption>
+              </figure>
+            </article>
+
+            <article class="swiper-slide moment-slide">
+              <figure class="polaroid polaroid-right">
+                <div class="photo-frame">
+                  <img class="photo-img" src="img/photo2.jpg" alt="Твоя улыбка в наш общий день" loading="lazy" decoding="async">
+                </div>
+                <figcaption>Это мы едем в лифтике</figcaption>
+              </figure>
+            </article>
+
+            <article class="swiper-slide moment-slide">
+              <figure class="polaroid polaroid-soft">
+                <div class="photo-frame">
+                  <img class="photo-img" src="img/photo3.jpg" alt="Мой любимый человек" loading="lazy" decoding="async">
+                </div>
+                <figcaption>Это мы в автобусике</figcaption>
+              </figure>
+            </article>
+          </div>
+
+          <button class="swiper-button-prev moments-button-prev" type="button" aria-label="Предыдущий момент"></button>
+          <button class="swiper-button-next moments-button-next" type="button" aria-label="Следующий момент"></button>
+          <div class="swiper-pagination moments-pagination" aria-label="Пагинация моментов"></div>
+        </div>
+
+        <p class="moments-note">Каждый момент с тобой — мой любимый.</p>
+      </div>
+    </section>
+
+    <section class="section wishes-section" aria-labelledby="wishes-title">
+      <div class="section-inner">
+        <div class="section-heading">
+          <p class="section-label">Открой по одной</p>
+          <h2 id="wishes-title">Мои пожелания тебе ⭐</h2>
+        </div>
+
+        <div class="jars-grid">
+          <button class="jar-item" type="button" data-opened="false">
+            <span class="jar-visual" data-asset-shell>
+              <img class="jar-image" src="img/jar.png" alt="" aria-hidden="true">
+            </span>
+            <span class="jar-label">Пожелание 1</span>
+            <span class="jar-wish">Чтобы у тебя всё всегда было хорошо</span>
+          </button>
+
+          <button class="jar-item" type="button" data-opened="false">
+            <span class="jar-visual" data-asset-shell>
+              <img class="jar-image" src="img/jar.png" alt="" aria-hidden="true">
+            </span>
+            <span class="jar-label">Пожелание 2</span>
+            <span class="jar-wish">Чтобы у тебя всё всегда получалось получилось</span>
+          </button>
+
+          <button class="jar-item" type="button" data-opened="false">
+            <span class="jar-visual" data-asset-shell>
+              <img class="jar-image" src="img/jar.png" alt="" aria-hidden="true">
+            </span>
+            <span class="jar-label">Пожелание 3</span>
+            <span class="jar-wish">Чтобы ты никогда не сдавалась</span>
+          </button>
+
+          <button class="jar-item" type="button" data-opened="false">
+            <span class="jar-visual" data-asset-shell>
+              <img class="jar-image" src="img/jar.png" alt="" aria-hidden="true">
+            </span>
+            <span class="jar-label">Пожелание 4</span>
+            <span class="jar-wish">Чтобы ты была самой счастливенькой девочкой на свете</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section magic-section" aria-labelledby="magic-title">
+      <div class="section-inner magic-inner">
+        <div class="section-heading">
+          <p class="section-label">ТЫ ЧУДО!!!</p>
+          <h2 id="magic-title"></h2>
+          <p class="section-subtitle">Нажми на звёздочку</p>
+        </div>
+
+        <div class="stars-row" aria-label="Интерактивные звёздочки">
+          <button class="interactive-star" type="button" aria-label="Нажать на первую звёздочку">
+            <span aria-hidden="true">★</span>
+          </button>
+          <button class="interactive-star interactive-star-large" type="button" aria-label="Нажать на вторую звёздочку">
+            <span aria-hidden="true">★</span>
+          </button>
+          <button class="interactive-star" type="button" aria-label="Нажать на третью звёздочку">
+            <span aria-hidden="true">★</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section letter-section" aria-labelledby="letter-title">
+      <div class="section-inner">
+        <article class="letter-card">
+          <h2 id="letter-title">Письмо для тебя котёночек мой</h2>
+
+          <div class="letter-text">
+            <p>Любимая моя,</p>
+            <p>Спасибо тебе за то, что ты есть!</p>
+            <p>За твою доброту, за то, что ты со мной рядышком, за твою поддержку, за то, что ты делаешь мою жизнь лучше каждый день и всегда!</p>
+            <p>Я очень ценю каждую секунду, проведённую с тобой и каждый раз хочу проводить с тобой как можно больше времени!🥺</p>
+            <p>Я хочу, чтобы этот день был для тебя особенным, а впереди у нас с тобой было ещё больше счастливых дней и очень крутых!</p>
+            <p>Я всегда буду рядышком любименькая моя</p>
+          </div>
+
+          <p class="letter-signature">Я тебя очень сильно люблю❤️</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section restart-section" aria-labelledby="restart-title">
+      <div class="section-inner restart-inner">
+        <h2 id="restart-title">Включить праздник ещё раз?</h2>
+        <p class="section-subtitle">Я готов делать это каждый день ❤️</p>
+        <div class="heart-pulse" aria-hidden="true"></div>
+        <button class="gold-button restart-button" id="btnRestart" type="button">Спасибо, мой свет ❤️</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
