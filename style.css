@@ -151,6 +151,13 @@ body[data-state="activated"] .intro-screen {
 }
 
 .intro-content {
+  --lamp-width: 230px;
+  --lamp-height: 354px;
+  --lamp-left: calc(50% - 115px);
+  --cord-width: 160px;
+  --cord-height: 332px;
+  --cord-left: calc(50% - 280px);
+  --cord-top: 8px;
   position: relative;
   z-index: 1;
   display: flex;
@@ -160,11 +167,19 @@ body[data-state="activated"] .intro-screen {
   text-align: center;
 }
 
-.lamp-container {
+.intro-stage {
   position: relative;
-  top: -70px;
-  width: 230px;
-  height: 354px;
+  width: 100%;
+  height: var(--lamp-height);
+  margin-bottom: 14px;
+}
+
+.lamp-container {
+  position: absolute;
+  top: 0;
+  left: var(--lamp-left);
+  width: var(--lamp-width);
+  height: var(--lamp-height);
   animation: gentleFloat 5.2s ease-in-out infinite;
 }
 
@@ -240,13 +255,13 @@ body[data-state="activated"] .lamp-glow {
 }
 
 .pull-cord {
-  position: relative;
-  top: -430px;
-  left: -200px;
+  position: absolute;
+  top: var(--cord-top);
+  left: var(--cord-left);
   display: block;
-  width: 160px;
-  height: 332px;
-  margin-top: -62px;
+  width: var(--cord-width);
+  height: var(--cord-height);
+  margin: 0;
   border: 0;
   background: transparent;
   color: var(--text-main);
@@ -1243,20 +1258,20 @@ h2 {
     padding: 24px 14px;
   }
 
-  .lamp-container {
-    width: 188px;
-    height: 300px;
+  .intro-content {
+    --lamp-width: 188px;
+    --lamp-height: 300px;
+    --lamp-left: calc(50% - 94px);
+    --cord-width: 144px;
+    --cord-height: 300px;
+    --cord-left: 8px;
+    --cord-left: max(8px, calc(50% - 224px));
+    --cord-top: 0px;
   }
 
   .lamp-glow {
     width: 188px;
     height: 188px;
-  }
-
-  .pull-cord {
-    width: 144px;
-    height: 300px;
-    margin-top: -56px;
   }
 
   .cord-handle-img {
