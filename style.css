@@ -151,6 +151,7 @@ body[data-state="activated"] .intro-screen {
 }
 
 .intro-content {
+  --intro-offset-y: -200px;
   --lamp-width: 230px;
   --lamp-height: 354px;
   --lamp-left: calc(50% - 115px);
@@ -165,6 +166,7 @@ body[data-state="activated"] .intro-screen {
   flex-direction: column;
   align-items: center;
   text-align: center;
+  transform: translateY(var(--intro-offset-y));
 }
 
 .intro-stage {
@@ -1151,6 +1153,7 @@ h2 {
     opacity: 0;
     transform: translateY(8px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -1158,11 +1161,13 @@ h2 {
 }
 
 @keyframes twinkle {
+
   0%,
   100% {
     opacity: 0.68;
     filter: brightness(0.95);
   }
+
   50% {
     opacity: 1;
     filter: brightness(1.28);
@@ -1170,34 +1175,41 @@ h2 {
 }
 
 @keyframes pulse {
+
   0%,
   100% {
     transform: rotate(-45deg) scale(1);
   }
+
   50% {
     transform: rotate(-45deg) scale(1.11);
   }
 }
 
 @keyframes jarFireflyDrift {
+
   0%,
   100% {
     transform: translate3d(0, 0, 0) scale(0.86);
   }
+
   38% {
     transform: translate3d(var(--fly-x-a), var(--fly-y-a), 0) scale(1.08);
   }
+
   72% {
     transform: translate3d(var(--fly-x-b), var(--fly-y-b), 0) scale(0.94);
   }
 }
 
 @keyframes jarFireflyPulse {
+
   0%,
   100% {
     opacity: 0.45;
     filter: brightness(0.86);
   }
+
   48% {
     opacity: 1;
     filter: brightness(1.45);
@@ -1205,23 +1217,28 @@ h2 {
 }
 
 @keyframes gentleFloat {
+
   0%,
   100% {
     transform: translateY(0);
   }
+
   50% {
     transform: translateY(-8px);
   }
 }
 
 @keyframes cordPull {
+
   0%,
   100% {
     transform: translateY(0);
   }
+
   42% {
     transform: translateY(22px);
   }
+
   70% {
     transform: translateY(8px);
   }
@@ -1249,6 +1266,12 @@ h2 {
   }
 }
 
+@media (max-height: 760px) and (min-width: 769px) {
+  .intro-content {
+    --intro-offset-y: -120px;
+  }
+}
+
 @media (max-width: 768px) {
   body {
     font-size: 15px;
@@ -1259,6 +1282,7 @@ h2 {
   }
 
   .intro-content {
+    --intro-offset-y: -96px;
     --lamp-width: 188px;
     --lamp-height: 300px;
     --lamp-left: calc(50% - 94px);
@@ -1441,6 +1465,7 @@ h2 {
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {
