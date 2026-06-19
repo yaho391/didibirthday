@@ -9,6 +9,8 @@ document.addEventListener("DOMContentLoaded", () => {
   let lightActivated = false;
   let lightSequenceRunning = false;
   let statusTimers = [];
+  const jarAnimationTimers = new Map();
+  const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
 
   const confettiColors = ["#FFB400", "#FFE1A0", "#FFFFFF", "#C9445C"];
 
@@ -159,15 +161,48 @@ document.addEventListener("DOMContentLoaded", () => {
   function initJars() {
     document.querySelectorAll(".jar-item").forEach((jar) => {
       addJarFireflies(jar);
+      jar.setAttribute("aria-expanded", jar.dataset.opened === "true" ? "true" : "false");
 
       jar.onclick = () => {
-        if (jar.dataset.opened === "true") {
-          return;
-        }
-
-        jar.dataset.opened = "true";
+        openJar(jar);
       };
     });
+  }
+
+  function openJar(jar) {
+    if (jar.dataset.opened === "true") {
+      return;
+    }
+
+    clearJarTimers(jar);
+    jar.dataset.opened = "true";
+    jar.setAttribute("aria-expanded", "true");
+    jar.classList.remove("is-formed");
+
+    if (reducedMotionQuery.matches || typeof Element.prototype.animate !== "function") {
+      jar.classList.add("is-formed");
+      return;
+    }
+
+    jar.classList.add("is-forming");
+
+    let formationScheduled = false;
+    const scheduleFormation = () => {
+      if (jar.dataset.opened !== "true" || formationScheduled) {
+        return;
+      }
+
+      formationScheduled = true;
+      scheduleJarTimer(jar, () => launchWishFireflies(jar), 280);
+    };
+
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(scheduleFormation, scheduleFormation);
+    } else {
+      scheduleFormation();
+    }
+
+    scheduleJarTimer(jar, scheduleFormation, 700);
   }
 
   function addJarFireflies(jar) {
@@ -188,6 +223,222 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     visual.appendChild(layer);
+  }
+
+  function launchWishFireflies(jar) {
+    const visual = jar.querySelector(".jar-visual");
+    const wish = jar.querySelector(".jar-wish");
+
+    if (!visual || !wish || jar.dataset.opened !== "true") {
+      finishJarFormation(jar);
+      return;
+    }
+
+    const sampledText = sampleWishText(wish);
+
+    if (!sampledText.points.length) {
+      finishJarFormation(jar);
+      return;
+    }
+
+    jar.querySelectorAll(".wish-firefly-flight").forEach((layer) => layer.remove());
+
+    const jarRect = jar.getBoundingClientRect();
+    const visualRect = visual.getBoundingClientRect();
+    const wishRect = wish.getBoundingClientRect();
+    const sourceX = visualRect.left - jarRect.left + visualRect.width / 2;
+    const sourceY = visualRect.top - jarRect.top + visualRect.height * 0.18;
+    const targetOffsetX = wishRect.left - jarRect.left + (wishRect.width - sampledText.width) / 2;
+    const targetOffsetY = wishRect.top - jarRect.top;
+    const flightLayer = document.createElement("span");
+    let longestFlight = 0;
+
+    flightLayer.className = "wish-firefly-flight";
+    flightLayer.setAttribute("aria-hidden", "true");
+
+    sampledText.points.forEach((point, index) => {
+      const particle = document.createElement("span");
+      const startX = sourceX + randomBetween(-10, 10);
+      const startY = sourceY + randomBetween(-5, 8);
+      const targetX = targetOffsetX + point.x;
+      const targetY = targetOffsetY + point.y;
+      const firstArcX = sourceX + (targetX - sourceX) * 0.2 + randomBetween(-54, 54);
+      const firstArcY = sourceY - randomBetween(52, 96);
+      const secondArcX = sourceX + (targetX - sourceX) * 0.7 + randomBetween(-28, 28);
+      const secondArcY = targetY - randomBetween(24, 58);
+      const delay = (index % 18) * 9 + randomBetween(0, 90);
+      const duration = randomBetween(1050, 1320);
+
+      longestFlight = Math.max(longestFlight, delay + duration);
+      particle.className = "wish-firefly-particle";
+      particle.style.setProperty("--particle-size", `${randomBetween(2.2, 4.2)}px`);
+      flightLayer.appendChild(particle);
+
+      particle.animate([
+        {
+          opacity: 0,
+          transform: `translate3d(${startX}px, ${startY}px, 0) scale(0.3)`
+        },
+        {
+          offset: 0.12,
+          opacity: 1,
+          transform: `translate3d(${startX}px, ${startY - 8}px, 0) scale(1)`
+        },
+        {
+          offset: 0.4,
+          opacity: 1,
+          transform: `translate3d(${firstArcX}px, ${firstArcY}px, 0) scale(1.2)`
+        },
+        {
+          offset: 0.72,
+          opacity: 0.92,
+          transform: `translate3d(${secondArcX}px, ${secondArcY}px, 0) scale(0.9)`
+        },
+        {
+          opacity: 0.96,
+          transform: `translate3d(${targetX}px, ${targetY}px, 0) scale(0.7)`
+        }
+      ], {
+        duration,
+        delay,
+        easing: "cubic-bezier(0.2, 0.72, 0.22, 1)",
+        fill: "forwards"
+      });
+    });
+
+    jar.appendChild(flightLayer);
+
+    scheduleJarTimer(jar, () => {
+      finishJarFormation(jar, flightLayer);
+    }, longestFlight + 700);
+  }
+
+  function sampleWishText(wish) {
+    const rect = wish.getBoundingClientRect();
+    const computed = window.getComputedStyle(wish);
+    const fontSize = Number.parseFloat(computed.fontSize) || 24;
+    const parsedLineHeight = Number.parseFloat(computed.lineHeight);
+    const lineHeight = Number.isFinite(parsedLineHeight) ? parsedLineHeight : fontSize * 1.14;
+    const width = Math.max(120, Math.floor(rect.width));
+    const canvas = document.createElement("canvas");
+    const context = canvas.getContext("2d", { willReadFrequently: true });
+
+    if (!context) {
+      return { width, height: 0, points: [] };
+    }
+
+    context.font = `${computed.fontWeight} ${fontSize}px ${computed.fontFamily}`;
+    const lines = wrapCanvasText(context, wish.textContent.trim(), width - 8);
+    const height = Math.max(1, Math.ceil(lines.length * lineHeight + 4));
+
+    canvas.width = width;
+    canvas.height = height;
+    context.clearRect(0, 0, width, height);
+    context.fillStyle = "#ffffff";
+    context.font = `${computed.fontWeight} ${fontSize}px ${computed.fontFamily}`;
+    context.textAlign = "center";
+    context.textBaseline = "middle";
+
+    lines.forEach((line, index) => {
+      context.fillText(line, width / 2, 2 + lineHeight * (index + 0.5));
+    });
+
+    const pixels = context.getImageData(0, 0, width, height).data;
+    const candidates = [];
+    const sampleStep = window.innerWidth <= 520 ? 3 : 2;
+
+    for (let y = 0; y < height; y += sampleStep) {
+      for (let x = 0; x < width; x += sampleStep) {
+        if (pixels[(y * width + x) * 4 + 3] > 90) {
+          candidates.push({ x, y });
+        }
+      }
+    }
+
+    const particleLimit = window.innerWidth <= 520 ? 170 : 220;
+    const desiredCount = clamp(Math.round(wish.textContent.trim().length * 6), 150, particleLimit);
+    const pointCount = Math.min(desiredCount, candidates.length);
+    const stride = candidates.length / pointCount;
+    const points = [];
+
+    for (let index = 0; index < pointCount; index += 1) {
+      points.push(candidates[Math.floor(index * stride)]);
+    }
+
+    return {
+      width,
+      height,
+      points
+    };
+  }
+
+  function wrapCanvasText(context, text, maxWidth) {
+    const words = text.split(/\s+/);
+    const lines = [];
+    let line = "";
+
+    words.forEach((word) => {
+      const candidate = line ? `${line} ${word}` : word;
+
+      if (line && context.measureText(candidate).width > maxWidth) {
+        lines.push(line);
+        line = word;
+      } else {
+        line = candidate;
+      }
+    });
+
+    if (line) {
+      lines.push(line);
+    }
+
+    return lines;
+  }
+
+  function randomBetween(min, max) {
+    return min + Math.random() * (max - min);
+  }
+
+  function finishJarFormation(jar, flightLayer = null) {
+    if (jar.dataset.opened !== "true") {
+      if (flightLayer) {
+        flightLayer.remove();
+      }
+      return;
+    }
+
+    jar.classList.remove("is-forming");
+    jar.classList.add("is-formed");
+
+    if (flightLayer) {
+      flightLayer.classList.add("is-fading");
+      scheduleJarTimer(jar, () => flightLayer.remove(), 480);
+    }
+  }
+
+  function scheduleJarTimer(jar, callback, delay) {
+    const timers = jarAnimationTimers.get(jar) || new Set();
+    const timerId = window.setTimeout(() => {
+      timers.delete(timerId);
+      if (timers.size === 0) {
+        jarAnimationTimers.delete(jar);
+      }
+      callback();
+    }, delay);
+
+    timers.add(timerId);
+    jarAnimationTimers.set(jar, timers);
+  }
+
+  function clearJarTimers(jar) {
+    const timers = jarAnimationTimers.get(jar);
+
+    if (!timers) {
+      return;
+    }
+
+    timers.forEach((timerId) => window.clearTimeout(timerId));
+    jarAnimationTimers.delete(jar);
   }
 
   function initStars() {
@@ -242,7 +493,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function resetJars() {
     document.querySelectorAll(".jar-item").forEach((jar) => {
+      clearJarTimers(jar);
       jar.dataset.opened = "false";
+      jar.setAttribute("aria-expanded", "false");
+      jar.classList.remove("is-forming", "is-formed");
+      jar.querySelectorAll(".wish-firefly-flight").forEach((layer) => layer.remove());
     });
   }
 
