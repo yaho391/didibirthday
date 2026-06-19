@@ -1290,7 +1290,7 @@ h2 {
     --cord-height: 300px;
     --cord-left: 8px;
     --cord-left: max(8px, calc(50% - 224px));
-    --cord-top: 0px;
+    --cord-top: -30px;
   }
 
   .lamp-glow {
